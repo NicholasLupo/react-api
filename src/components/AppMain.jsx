@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function AppMain() {
 
@@ -7,24 +7,37 @@ export default function AppMain() {
     const male_actors = 'https://lanciweb.github.io/demo/api/actors/'
     const female_actresses = 'https://lanciweb.github.io/demo/api/actresses/'
 
-    fetch(male_actors)
-        .then(rep => rep.json())
-        .then(actor => {
-            setActors(actor)
-        })
+    useEffect(() => {
 
-    fetch(female_actresses)
-        .then(rep => rep.json())
-        .then(actor => {
-            setActors(actor)
-        })
+        fetch(male_actors)
+            .then(rep => rep.json())
+            .then(actor => {
+                setActors(actor)
+            })
+
+        fetch(female_actresses)
+            .then(rep => rep.json())
+            .then(actor => {
+                setActors(actor)
+            })
+
+    })
+
 
     return (
         <main>
             <div className="container">
-                <div className="row">
+                <h1> Every actors and actresses </h1>
+                <div className="row row-cols-3">
                     <div className="col">
-
+                        <div className="card" key={actors.id}>
+                            <img src={actors.image} alt="" />
+                            <div className="card-body">
+                                <p> Name: <strong>{actors.name}</strong> </p>
+                                <p> Nationality: <strong>{actors.nationality}</strong> </p>
+                                <p> Birthday: <strong>{actors.birth_year}</strong> </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
